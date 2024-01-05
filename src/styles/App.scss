@@ -11,7 +11,9 @@ $Light-grayish-cyan: hsl(185, 41%, 84%);
 $Very-light-grayish-cyan: hsl(189, 41%, 97%);
 $White: hsl(0, 0%, 100%);
 
-
+* {
+  box-sizing: border-box;
+}
 body {
   background-color: $Light-grayish-cyan;
   font-family: 'Space Mono', monospace;
@@ -30,23 +32,106 @@ input {
   align-items: center;
   gap: 100px;
 }
-// ## Colors
+.calculator-container{
+  background-color: $White;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 0px 50px;
+  display: flex;
+  flex-grow: 50%;
+  flex-direction: row;
+  gap: 32px;
 
-// ### Primary
+  .tip-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    padding: 8px;
+  
+    label {
+      color: $Dark-grayish-cyan;
+    }
+  }
+}
 
+.input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
 
+  input {
+    text-align: right;
+    margin-top: 10px;
+    background-color: $Very-light-grayish-cyan;
+    border: none;
+    height: 50px;
+    width: 100%;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    color: $Very-dark-cyan;
+    font-weight: 700;
+  }
+  input:focus-visible {
+    outline-color: $Strong-cyan;
+  }
 
-// ### Neutral
+  .input-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(calc(50% - 10px));
+  }
+}
 
+.tip-value-selection {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 
+  .input-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+  }
 
-// ## Typography
+  .radio-input{
+    position: relative;
+    display: inline-block;
+  }
+  input[type="radio"] {
+    appearance: none;
+    background-color: $Very-dark-cyan;
+    border-radius: 4px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  input[type="radio"]:hover {
+    background-color: $Light-grayish-cyan;
+  }
+  input[type="radio"]:checked {
+    background-color: $Strong-cyan
+  }
+  label.button.tip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: $White;
+  }
+  input[type="text"] {
+    height: 100%;
+    margin: 0;
+    text-align: center;
+  }
+}
 
-// ### Body Copy
-
-// - Font size (form inputs): 24px
-
-// ### Font
-
-// - Family: [Space Mono](https://fonts.google.com/specimen/Space+Mono)
-// - Weights: 700
+.results-container {
+  width: 50%;
+  background-color: $Very-dark-cyan;
+  border-radius: 10px;
+  padding: 32px;
+}

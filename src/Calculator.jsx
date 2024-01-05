@@ -1,5 +1,6 @@
 import Amount from './Amount'
 import InputButton from './InputButton'
+import Result from './Result'
 
 export default function Calculator() {
 
@@ -24,22 +25,9 @@ export default function Calculator() {
 
       </form>
       <div className='results-container'>
-        <div className="tip-amount">
-          <span>
-            Tip Amount
-            <p>/person</p>
-          </span>
-          <div className="result"></div>
-        </div>
-        <div className="total">
-          <span>
-            Total
-            <p>/person</p>
-          </span>
-
-          <div className="result"></div>
+          <Result header='Tip Amount' result='0.00'/>
+          <Result header='Total' result='0.00'/>
           <button className="reset disabled">RESET</button>
-        </div>
       </div>
     </div>
   )

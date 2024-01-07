@@ -8,60 +8,69 @@ export default function Calculator() {
   const [bill, setBill] = useState('')
   const [tip, setTip] = useState('')
   const [numberOfPeople, setNumberOfPeople] = useState('')
-  // const [tipAmount, setTipAmount] = useState('0.00')
 
   function calculateTip () {
-    const billNr = convertStringToNumber(bill, 'float')
-    const tipNr = convertStringToNumber(tip, 'integer') * 0.01
-    const calculatedTip = parseFloat(billNr * tipNr).toFixed(2)
-    console.log({billNr,tipNr})
-    return calculatedTip
+    const billAmount = parseToNumber(bill, true)
+    const tipPercentage = parseToNumber(tip) * 0.01
+
+    return parseFloat(billAmount * tipPercentage)
   }
+
   const calculatedTip = calculateTip()
 
   function calculateTipPerPerson() {
-    console.log({calculatedTip,numberOfPeople}, typeof calculatedTip)
-    return (calculatedTip / convertStringToNumber(numberOfPeople, 'integer')).toFixed(2)
+    return (calculatedTip + parseToNumber(bill, true)) / parseToNumber(numberOfPeople)
   }
 
   const tipPerPerson = calculateTipPerPerson()
 
   function resetValues () {
-    console.log('reset')
     setBill('')
     setTip('')
     setNumberOfPeople(0)
   }
 
-  function convertStringToNumber (str, parseNumberType) {
-    if (parseNumberType === 'integer') {
-      return parseInt(str)
-    }
-    if (parseNumberType === 'float') {
-      return parseFloat(str)
-    }
+  function parseToNumber (str, isFloat = false) {
+    return isFloat ? parseFloat(str) : parseInt(str)
   }
-  const isResetDisabeld = (tip === "" && bill === "" && numberOfPeople === '') ? true : false
+
+  const isResetDisabled = !!(tip === "" && bill === "" && numberOfPeople === '')
+  const tipAmount = tip && bill ? calculatedTip.toFixed(2) : '0.00'
+  const totalAmount = numberOfPeople != 0 ? tipPerPerson.toFixed(2) : '0.00'
   
   return (
     <div className='calculator-container'>
       <form className='tip-form'>
-        <Amount header='Bill' icon='./assets/images/icon-dollar.svg' setValue={setBill} value={bill}/>
-      
-       <TipSelection setTip={setTip}/>
-
-        <Amount header='Number of people' icon='./assets/images/icon-person.svg' setValue={setNumberOfPeople} value={numberOfPeople}/>
-
+        <Amount 
+          header='Bill' 
+          value={bill}
+          setValue={setBill} 
+          icon='./assets/images/icon-dollar.svg' 
+        />
+        <TipSelection setTip={setTip}/>
+        <Amount 
+          header='Number of people' 
+          value={numberOfPeople}
+          setValue={setNumberOfPeople} 
+          icon='./assets/images/icon-person.svg'
+        />
       </form>
       <div className='results-container'>
-          <Result header='Tip Amount' result={tip && bill? calculatedTip : '0.00'}/>
-          <Result header='Total' result={numberOfPeople != 0 ? tipPerPerson : '0.00'}/>
-          <button 
-            className={`${isResetDisabeld? 'reset disabled' : 'reset'}`} 
-            onClick={ isResetDisabeld ? null : resetValues  }
-          >
-            RESET
-          </button>
+        <Result 
+          header='Tip Amount'
+          result={tipAmount}
+        />
+        <Result 
+          header='Total' 
+          result={totalAmount}
+        />
+        <button 
+          className='reset'
+          disabled={isResetDisabled}
+          onClick={resetValues}
+        >
+          RESET
+        </button>
       </div>
     </div>
   )

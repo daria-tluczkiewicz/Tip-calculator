@@ -1,28 +1,36 @@
+import PropTypes from 'prop-types';
+
+Amount.propTypes = {
+  header: PropTypes.string,
+  icon: PropTypes.string,
+  setValue: PropTypes.func,
+  value: PropTypes.string,
+  minimal: PropTypes.bool
+}
+
 export default function Amount({ header, icon, setValue, value, minimal = false }) {
 
-  function handleKeyDown (e) {
-    let newValue = 0
+  const sectionNameClass = header.replaceAll(' ', '-').toLowerCase()
 
-    if(e.key === 'Backspace'){
-      if (value === undefined || value === '') {
-        return
-      }
-      
-      newValue = value.slice(0,-1)
+  function handleInputChange (e) {
+    console.log({e})
+    const pressedKey = e.nativeEvent.data
+    const inputType = e.nativeEvent.inputType
+    let newValue = e.target.value
+
+    if(pressedKey === ',') {
+      newValue = newValue.replace(',', '.')
       setValue(newValue)
       return
     }
 
-    if (e.key === ',') {
-      newValue = value + '.'
-      setValue(newValue)
-      return
+    if (isNumericCharacter(pressedKey) ||
+      inputType === 'deleteContentBackward' || 
+      inputType === 'insertFromPaste'){
+        setValue(newValue)
     }
 
-    if (isNumericCharacter(e.key)) {
-      newValue = value + e.key
-      setValue(newValue)
-    }
+    
   }
 
   function isNumericCharacter(char) {
@@ -32,10 +40,11 @@ export default function Amount({ header, icon, setValue, value, minimal = false 
   function renderInput (required = false) {
     return (
       <input 
+          id={sectionNameClass}
           type='text' 
           name={header}
           placeholder='0' 
-          onKeyDown={handleKeyDown}
+          onChange={handleInputChange}
           value={value}
           required={required}
         />
@@ -43,8 +52,11 @@ export default function Amount({ header, icon, setValue, value, minimal = false 
   }
 
   return minimal ? renderInput() : (
-    <section className={header}>
-      <label>{header}</label>
+    <section className={sectionNameClass}>
+      <label htmlFor={sectionNameClass}>
+        {header}
+        {value === '0' ? <div className="error">Cannot be zero</div> : null}
+      </label>
       <div className="input-wrapper">
         {renderInput(true)}
         <img src={icon} className='input-icon'/>

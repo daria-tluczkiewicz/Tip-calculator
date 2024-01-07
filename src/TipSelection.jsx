@@ -1,23 +1,38 @@
 import { useEffect, useState } from 'react'
 import RadioButton from './RadioButton'
-import Amount from './Amount'
+import Amount from './Amount';
+import PropTypes from 'prop-types';
 
-export default function TipSelection({ setTip }) {
+TipSelection.propTypes = {
+  setTip: PropTypes.func,
+  customTip: PropTypes.string,
+  setCustomTip: PropTypes.func
+}
+
+export default function TipSelection({ setTip, customTip, setCustomTip }) {
   const [isCustom, setIsCustom] = useState(false)
   const [checkedBoxValue, setCheckedBoxValue] = useState('')
-  const [customTip, setCustomTip] = useState('')
+ 
   
   const tipOptions = [5, 10, 15, 25, 50]
-  useEffect(updateTip,[customTip])
 
-  function updateTip () {
+  useEffect(() => {
     if(customTip === ''){
       setIsCustom(false)
       return
     }
     setTip(customTip)
     setIsCustom(true)
-  }
+  },[customTip, setTip])
+
+  // useEffect(() => {
+  //   if(customTip === ''){
+  //     setIsCustom(false)
+  //     return
+  //   }
+  //   setTip(customTip)
+  //   setIsCustom(true)
+  // },[customTip, setTip])
 
   return (
     <section className='tip-value-selection'>
@@ -39,6 +54,7 @@ export default function TipSelection({ setTip }) {
         )
       })}
         <Amount 
+          header="Custom Tip"
           value={isCustom ? customTip : ''}
           setValue={setCustomTip} 
           minimal={true}

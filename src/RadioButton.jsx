@@ -1,6 +1,17 @@
-import { useEffect, useState } from "react";
+import PropTypes from 'prop-types'
+
+RadioButton.propTypes = {
+  id: PropTypes.number,
+  value: PropTypes.number,
+  isChecked: PropTypes.bool,
+  setTip: PropTypes.func,
+  setIsCustom: PropTypes.func,
+  setCheckedBoxValue: PropTypes.func
+}
+
 
 export default function RadioButton({ id, value, setTip, setIsCustom, isChecked, setCheckedBoxValue }) {
+
   const handleCheckboxChange = (e) => {
     setCheckedBoxValue(value)
     setTip(e.target.value)

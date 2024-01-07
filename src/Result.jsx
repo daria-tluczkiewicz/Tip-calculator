@@ -1,4 +1,9 @@
-import React from 'react'
+import PropTypes from 'prop-types'
+
+Result.propTypes = {
+  header: PropTypes.string,
+  result: PropTypes.string
+}
 
 
 export default function Result({ header, result }) {

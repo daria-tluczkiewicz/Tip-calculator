@@ -8,6 +8,7 @@ export default function Calculator() {
   const [bill, setBill] = useState('')
   const [tip, setTip] = useState('')
   const [numberOfPeople, setNumberOfPeople] = useState('')
+  const [customTip, setCustomTip] = useState('')
 
   function calculateTip () {
     const billAmount = parseToNumber(bill, true)
@@ -27,7 +28,8 @@ export default function Calculator() {
   function resetValues () {
     setBill('')
     setTip('')
-    setNumberOfPeople(0)
+    setNumberOfPeople('')
+    setCustomTip('')
   }
 
   function parseToNumber (str, isFloat = false) {
@@ -36,7 +38,7 @@ export default function Calculator() {
 
   const isResetDisabled = !!(tip === "" && bill === "" && numberOfPeople === '')
   const tipAmount = tip && bill ? calculatedTip.toFixed(2) : '0.00'
-  const totalAmount = numberOfPeople != 0 ? tipPerPerson.toFixed(2) : '0.00'
+  const totalAmount = numberOfPeople != '' && numberOfPeople != 0 && tip && bill  ? tipPerPerson.toFixed(2) : '0.00'
   
   return (
     <div className='calculator-container'>
@@ -47,7 +49,11 @@ export default function Calculator() {
           setValue={setBill} 
           icon='./assets/images/icon-dollar.svg' 
         />
-        <TipSelection setTip={setTip}/>
+        <TipSelection 
+          setTip={setTip} 
+          setCustomTip={setCustomTip}
+          customTip={customTip} 
+        />
         <Amount 
           header='Number of people' 
           value={numberOfPeople}

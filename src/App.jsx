@@ -6,7 +6,9 @@ function App() {
 
   return (
     <div className="app-container">
-      <img src="/assets/images/logo.svg" alt="SPLITTER" />
+      <div className="logo">
+        <img src="/assets/images/logo.svg" alt="SPLITTER" />
+      </div>
       <Calculator/>
     </div>
     )

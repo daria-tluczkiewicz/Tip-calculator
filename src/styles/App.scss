@@ -22,6 +22,17 @@ body {
   font-weight: 700;
 }
 
+.attribution {
+  font-size: 11px; 
+  text-align: center; 
+  padding: 10px;
+  
+  a {
+     color: hsl(228, 45%, 44%); 
+     
+    }
+}
+
 input {
   font-size: 24px;
 }
@@ -55,6 +66,7 @@ input {
     label {
       color: $Dark-grayish-cyan;
     }
+    
   }
 }
 
@@ -93,6 +105,10 @@ input {
   gap: 10px;
   flex-direction: column;
 
+  h1 {
+    color: $Dark-grayish-cyan;
+  }
+
   .input-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -116,7 +132,7 @@ input {
   input[type="radio"]:hover {
     background-color: $Light-grayish-cyan;
     
-    &+ label {
+    & + label {
       color: $Very-dark-cyan;
     }
   }
@@ -131,12 +147,24 @@ input {
     left: 50%;
     transform: translate(-50%,-50%);
     color: $White;
+    font-size: 24px;
   }
 
   input[type="text"] {
     height: 100%;
     margin: 0;
     text-align: center;
+  }
+}
+
+
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap:10px;
+  .error {
+    color: red;
   }
 }
 
@@ -192,6 +220,32 @@ input {
     &:hover {
       background-color: $Light-grayish-cyan;
       color: $Very-dark-cyan;
+    }
+  }
+}
+
+@media (max-width: 650px) {
+  .app-container{
+    height: fit-content;
+    gap: 0;
+  }
+  .logo {
+    height: 20vh;
+    display: flex;
+    align-items: center;
+  }
+  .calculator-container {
+    
+    height: fit-content;
+    flex-direction: column;
+    margin: 0 0 0 0;
+    border-radius: 20px 20px 0 0 ;
+
+    .tip-form, .results-container{
+      width: 100%;
+    }
+    .result {
+      font-size: 28px !important;
     }
   }
 }

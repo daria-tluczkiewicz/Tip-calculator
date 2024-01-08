@@ -25,9 +25,14 @@ export default function Amount({ header, icon, setValue, value, minimal = false 
     }
 
     if (isNumericCharacter(pressedKey) ||
-      inputType === 'deleteContentBackward' || 
-      inputType === 'insertFromPaste'){
+      inputType === 'deleteContentBackward'){
         setValue(newValue)
+    }
+    if (inputType === 'insertFromPaste'){
+      console.log({value})
+      newValue = newValue.replace(`/[^0-9.,]/`, '').replace(',', '.')
+      console.log({value})
+      setValue(newValue)
     }
 
     
@@ -50,13 +55,14 @@ export default function Amount({ header, icon, setValue, value, minimal = false 
         />
     )
   }
+  console.log({value})
 
   return minimal ? renderInput() : (
     <section className={sectionNameClass}>
-      <label htmlFor={sectionNameClass}>
-        {header}
+      <div className='section-heading'>
+        <label htmlFor={sectionNameClass}>{header}</label>
         {value === '0' ? <div className="error">Cannot be zero</div> : null}
-      </label>
+      </div>
       <div className="input-wrapper">
         {renderInput(true)}
         <img src={icon} className='input-icon'/>
@@ -64,3 +70,4 @@ export default function Amount({ header, icon, setValue, value, minimal = false 
     </section>
   )
 }
+

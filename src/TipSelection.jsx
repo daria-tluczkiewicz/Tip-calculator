@@ -25,15 +25,6 @@ export default function TipSelection({ setTip, customTip, setCustomTip }) {
     setIsCustom(true)
   },[customTip, setTip])
 
-  // useEffect(() => {
-  //   if(customTip === ''){
-  //     setIsCustom(false)
-  //     return
-  //   }
-  //   setTip(customTip)
-  //   setIsCustom(true)
-  // },[customTip, setTip])
-
   return (
     <section className='tip-value-selection'>
     <h1>Select Tip %</h1>
